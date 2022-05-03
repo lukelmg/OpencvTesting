@@ -14,7 +14,7 @@ while True:
     print(B,G,R)
 
     # Red color
-    low_yellow = np.array([15, 0, 150])
+    low_yellow = np.array([15, 0, 160])
     high_yellow = np.array([35, 255, 255])
     mask = cv2.inRange(hsv_frame, low_yellow, high_yellow)
 
