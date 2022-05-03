@@ -21,7 +21,7 @@ while True:
     #cv2.rectangle(frame, (320, 240), (50, 50), (int(B), int(G), int(R)), 3)
     cv2.circle(frame, (320, 240), 5, (int(B), int(G), int(R)), 4, 3)
 
-    mask_contours, hierarchy = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE) # Finding contours in mask image
+    _, contours, _ = cv2.findContours(mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
 
     # Finding position of all contours
     if len(mask_contours) != 0:
