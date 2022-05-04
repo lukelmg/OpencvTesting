@@ -1,10 +1,13 @@
 import cv2
 import numpy as np
+from matplotlib import pyplot as plt
 cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
 
 while True:
     _, frame = cap.read()
     _, box = cap.read()
+    _, toblur = cap.read()
+
     blurred_frame = cv2.GaussianBlur(frame, (5, 5), 0)
     hsv = cv2.cvtColor(blurred_frame, cv2.COLOR_BGR2HSV)
 
@@ -24,9 +27,19 @@ while True:
                 cv2.rectangle(box, (x, y), (x + w, y + h), (0, 0, 255), 3) #drawing rectangle
 
 
+    blur = cv2.blur(toblur, (20,20))
+    hsv2 = cv2.cvtColor(blur, cv2.COLOR_BGR2HSV)
+    mask2 = cv2.inRange(hsv2, low_yellow, high_yellow)
+
+    contours2, _ = cv2.findContours(mask2, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
+
+    for contour2 in contours2:
+        cv2.drawContours(blur, contour2, -1, (152, 252, 3), 3)
+
     cv2.imshow("Frame", frame)
     cv2.imshow("Mask", mask)
     cv2.imshow("Outline", box)
+    cv2.imshow("Blur", blur)
     key = cv2.waitKey(1)
     if key == 27:
         break
