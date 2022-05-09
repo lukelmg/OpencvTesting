@@ -1,0 +1,3 @@
+# OpencvTesting
+
+testing opencv capabilities
