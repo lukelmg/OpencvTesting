@@ -1,25 +1,13 @@
 import cv2
 import numpy as np
 from matplotlib import pyplot as plt
-import tkinter as tk
-
-root = tk.Tk()
-root.geometry("1600x800")
-f1 = tk.LabelFrame(root,bg="red")
-f1.pack()
-
-L1 = tk.Label(f1,bg="red")
-L1.pack()
-
-greeting = tk.Label(text="Hello, Tkinter")
-
-
+from threading import Thread
 cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
 
 cap.set(cv2.CAP_PROP_FRAME_WIDTH, 600)  # set new dimensionns to cam object (not cap)
 cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 400)
 
-while True:
+def cvstuff():
     _, frame = cap.read()
     _, box = cap.read()
     _, toblur = cap.read()
@@ -53,18 +41,13 @@ while True:
         cv2.drawContours(blur, contour2, -1, (152, 252, 3), 3)
 
     cv2.imshow("Frame", frame)
-
-    L1['image'] = frame
-    
-    root.update()
-
-    """cv2.imshow("Mask", mask)
+    cv2.imshow("Mask", mask)
     cv2.imshow("Outline", box)
     cv2.imshow("Blur", blur)
-    key = cv2.waitKey(1)
-    if key == 27:
-        break
-    """
+
+
+t1 = Thread(target=cvstuff)
+t1.start()
         
 cap.release()
 cv2.destroyAllWindows()
